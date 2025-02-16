@@ -21,6 +21,18 @@
     --SpringGreen: #00FF7F;
     --Grey: #BEBEBE;
     --LightGray: #d3d3d3;
+    --StellBlue: #4682B4;
+    --LightSlateGray: #778899;
+    --LightBlue: #ADD8E6;
+    --DeepPink: #FF1493;
+    --Blue: #0000FF;
+    --Purple: #800080;
+    --BlueViolet: #8A2BE2;
+    --Black: #000000;
+    --SpringGreen: #00FF7F;
+    --DarkSeaGreen: #8FBC8F;
+    --LimeGreen: #32CD32;
+    --Lime: #00FF00;
   }
   
   button{
@@ -32,7 +44,7 @@
   }
   
   body{
-    background: var(--SpringGreen);
+    background: var(--Grey);
   }
   
   body, input, textarea, select, button{
