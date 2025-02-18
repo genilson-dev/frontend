@@ -38,3 +38,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 # Bibliotecas usadas no curso
 yarn add sass
 # Obs, foi instalado a biblioteca css modulos no vscode
+yarn add axios
