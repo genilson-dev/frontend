@@ -1,18 +1,35 @@
-"use client"
 import React from 'react'
 import Image from 'next/image';
 import styles from './page.module.scss'
 import logo from '../../../public/logo.svg'
 import Link from 'next/link';
+import { api } from '@/service/api';
+import { redirect } from 'next/navigation';
 
-export default function page() {
-    function handleRegister(formData: FormData){
-        const name = formData.get("name")
-        const email = formData.get("email")
-        const password = formData.get("password")
-        console.log(name, email, password);
-        
+export default function Signup() {
+    async function handleRegister(formData: FormData) {
+        "use server";
+        const name = formData.get("name");
+        const email = formData.get("email");
+        const password = formData.get("password");
+    
+        // Verifica se algum campo está vazio
+        if (!name || !email || !password) {
+            console.log("Preencha todos os campos");
+            return;
+        }
+    
+        try {
+            await api.post("/user/create", { name, email, password });
+            console.log("Usuário criado com sucesso!");
+        } catch (error) {
+            console.error("Erro ao criar usuário:", error);
+        }
+        // Redirecionando o usuario para a pagina de login
+        redirect("/");
     }
+    
+    
     return (
         <div className={styles.containerCenter} >
             <Image src={logo} alt="logo" />
