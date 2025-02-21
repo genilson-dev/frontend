@@ -34,9 +34,9 @@ export default function Page() {
 
       const cookieStorage = await cookies();
 
-      cookieStorage.set('login', response.data.token, {
+      cookieStorage.set("@login", response.data.token, {
         maxAge: expressTime, // Quando o token vai expirar.
-        path: '/', // Caminho onde eu quero acessar.
+        path: "/", // Caminho onde eu quero acessar.
         httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
       });
