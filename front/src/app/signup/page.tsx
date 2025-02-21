@@ -1,3 +1,4 @@
+// "use server"; // Diretiva use client
 import React from 'react'
 import Image from 'next/image';
 import styles from './page.module.scss'
@@ -8,7 +9,7 @@ import { redirect } from 'next/navigation';
 
 export default function Signup() {
     async function handleRegister(formData: FormData) {
-        "use server";
+        "use server"; // Diretiva use client
         const name = formData.get("name");
         const email = formData.get("email");
         const password = formData.get("password");
