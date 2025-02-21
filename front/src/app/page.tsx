@@ -1,95 +1,81 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import styles from './page.module.scss';
+import logo from '../../public/logo.svg';
+import Image from 'next/image';
+import Link from 'next/link';
+import { api } from '@/service/api';
+import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
-export default function Home() {
+export default function Page() {
+
+  async function handleLogin(formData: FormData) {
+    "use server"; // Certifique-se de que esta diretiva está corretamente posicionada
+
+    const email = formData.get('email');
+    const password = formData.get('password');
+
+    if (email === "" || password === "") {
+      console.log('Preencha todos os campos');
+      return;
+    }
+
+    try {
+      const response = await api.post('/login', { email, password });
+
+      // Verificando se o token exite na requisição.
+      if (response.data.token) {        
+        return;
+      }
+
+      // Salvando o cookie do usuario
+      console.log(response.data.token);
+      
+      const expressTime = 60 * 60 * 24 * 30 * 1000;
+
+      const cookieStorage = await cookies();
+
+      cookieStorage.set("@login", response.data.token, {
+        maxAge: expressTime, // Quando o token vai expirar.
+        path: "/", // Caminho onde eu quero acessar.
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
+      });
+      
+    } catch (error) {
+      console.error('Erro ao logar:', error);
+      return;
+    }
+    redirect('/dashboard');
+  }
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+    <div className={styles.containerCenter}>
+      <Image src={logo} alt="logo" />
+      <section className={styles.login}>
+        <h1>Faça login</h1>
+        <form action={handleLogin}>
+          <h2>Email</h2>
+          <input
+            type="email"
+            name="email"
+            placeholder="Digite seu email..."
+            required
+            className={styles.input}
           />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+          <h2>Password</h2>
+          <input
+            type="password"
+            name="password"
+            placeholder="Senha..."
+            required
+            className={styles.input}
           />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <button type="submit" className={styles.button}>Logar</button>
+          <Link href="/signup" className={styles.text}>
+            Não possui uma conta? <strong>Cadastre-se</strong>
+          </Link>
+        </form>
+      </section>
     </div>
   );
 }
