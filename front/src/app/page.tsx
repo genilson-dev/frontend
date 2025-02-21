@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { api } from '@/service/api';
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 export default function Page() {
 
@@ -27,7 +28,12 @@ export default function Page() {
         console.log('Erro ao logar:', response.data);
         return;
       }
-      console.log('Logado com sucesso!', response.data);
+      // Salvando o cookie do usuario
+      const expressTime = 60 * 60 * 24 * 30 * 1000;
+      const cookieStorage = await cookies();
+      cookieStorage.set('login', response.data.token, {
+        maxAge: expressTime,
+      });
       
     } catch (error) {
       console.error('Erro ao logar:', error);
