@@ -22,6 +22,11 @@ export default function Page() {
 
     try {
       const response = await api.post('/login', { email, password });
+      // Verificando se o token exite na requisição.
+      if (!response.data.token) {
+        console.log('Erro ao logar:', response.data);
+        return;
+      }
       console.log('Logado com sucesso!', response.data);
       
     } catch (error) {
