@@ -1,5 +1,3 @@
-
-import React from 'react';
 import styles from './page.module.scss';
 import logo from '../../public/logo.svg';
 import Image from 'next/image';
@@ -23,20 +21,29 @@ export default function Page() {
 
     try {
       const response = await api.post('/login', { email, password });
+
       // Verificando se o token exite na requisição.
-      if (!response.data.token) {
-        console.log('Erro ao logar:', response.data);
+      if (response.data.token) {        
         return;
       }
+
       // Salvando o cookie do usuario
+      console.log(response.data.token);
+      
       const expressTime = 60 * 60 * 24 * 30 * 1000;
+
       const cookieStorage = await cookies();
+
       cookieStorage.set('login', response.data.token, {
-        maxAge: expressTime,
+        maxAge: expressTime, // Quando o token vai expirar.
+        path: '/', // Caminho onde eu quero acessar.
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
       });
       
     } catch (error) {
       console.error('Erro ao logar:', error);
+      return;
     }
     redirect('/dashboard');
   }
