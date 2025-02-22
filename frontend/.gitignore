@@ -1,14 +1,14 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-front/node_modules
-front/.pnp
-front/.pnp.*
-front/.yarn/*
-front/!.yarn/patches
-front/!.yarn/plugins
-front/!.yarn/releases
-front/!.yarn/versions
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # testing
 /coverage
@@ -18,7 +18,7 @@ front/!.yarn/versions
 /out/
 
 # production
-front/build
+/build
 
 # misc
 .DS_Store
@@ -39,9 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-package.json
-package-lock.json
-package.json
-next.config.ts
-tsconfig.json
-public
