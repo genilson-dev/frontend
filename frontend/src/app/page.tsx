@@ -6,10 +6,12 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div>
+      <div className={styles.containerCenter}>
         <Image src={logo} alt="Logo" />
-      </div>
+      
+
       <section className={styles.login}>
+
         <form action="">
           <input
             type="email"
@@ -18,6 +20,7 @@ export default function Home() {
             placeholder="Digite o E-mail"
             className={styles.input}
           />
+
           <input
             type="password"
             name="password"
@@ -25,12 +28,17 @@ export default function Home() {
             placeholder="Digite sua senha"
             className={styles.input}
           />
+
           <button type="submit" className={styles.button}>Logar</button>
+
         </form>
+
         <Link href="/signup" className={styles.text}>
           Não possui uma conta? <strong>Cadastre-se!</strong>
         </Link>
+
       </section>
+      </div>
     </>
   );
 }
