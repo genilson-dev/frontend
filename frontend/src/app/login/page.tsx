@@ -3,30 +3,23 @@ import logo from "@/../public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Signup() {
+export default function Home() {
   return (
     <>
       <div className={styles.containerCenter}>
         <Link href={"/"}>
-        <Image src={logo} alt="Logo" />
+          <Image src={logo} alt="Logo" />        
         </Link>
       
 
       <section className={styles.login}>
-        <h1>Cadastre-se!</h1>
+
         <form action="">
-          <input 
-          type="text"
-            name="name" 
-            required 
-            placeholder="Qual o seu nome?"
-            className={styles.input}
-          />
           <input
             type="email"
             name="email"
             required
-            placeholder="Informe seu E-mail"
+            placeholder="Digite o E-mail"
             className={styles.input}
           />
 
@@ -34,16 +27,16 @@ export default function Signup() {
             type="password"
             name="password"
             required
-            placeholder="Informe sua senha"
+            placeholder="Digite sua senha"
             className={styles.input}
           />
 
-          <button type="submit" className={styles.button}>Cadastrar</button>
+          <button type="submit" className={styles.button}>Logar</button>
 
         </form>
 
-        <Link href="/" className={styles.text}>
-          Já possui uma conta? <strong>Faça Login!</strong>
+        <Link href="/signup" className={styles.text}>
+          Não possui uma conta? <strong>Cadastre-se!</strong>
         </Link>
 
       </section>

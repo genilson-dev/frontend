@@ -12,7 +12,7 @@ export default function Home() {
 
       <section className={styles.login}>
 
-        <form action="">
+        {/* <form action="">
           <input
             type="email"
             name="email"
@@ -31,10 +31,13 @@ export default function Home() {
 
           <button type="submit" className={styles.button}>Logar</button>
 
-        </form>
+        </form> */}
 
         <Link href="/signup" className={styles.text}>
           Não possui uma conta? <strong>Cadastre-se!</strong>
+        </Link>
+        <Link href="/login" className={styles.text}>
+          Já tem uma conta? <strong>Faça login!</strong>
         </Link>
 
       </section>
