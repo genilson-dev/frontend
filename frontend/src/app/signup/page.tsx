@@ -2,19 +2,42 @@ import styles from "./page.module.scss";
 import logo from "@/../public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { api } from "@/service/api";
 
 export default function Signup() {
+  
+  async function handleRegister(formData: FormData){
+    "use server";
+    // Função que captura os dados de cada campo dos inputs do formulario em nextjs
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    if (!name || !email || !password) {
+      return;
+    }
+    // Acessando a API e realizando o cadastro do usuario
+    try {
+      await api.post("/user/create", {name, email, password});
+      console.log("Usuario cadastrado com sucesso");
+      
+      
+    } catch (error) {    
+      console.log("Erro ao cadastrar o usuario", error);        
+    }
+  }
+ 
+
   return (
     <>
       <div className={styles.containerCenter}>
-        <Link href={"/"}>
+        <Link href={"/"}> 
         <Image src={logo} alt="Logo" />
         </Link>
       
 
       <section className={styles.login}>
         <h1>Cadastre-se!</h1>
-        <form action="">
+        <form action={handleRegister}>
           <input 
           type="text"
             name="name" 

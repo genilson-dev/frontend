@@ -1,5 +1,6 @@
 import styles from "./page.module.scss";
 import logo from "@/../public/logo.svg";
+import mmm from "@/../public/mmm.png";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,7 +8,7 @@ export default function Home() {
   return (
     <>
       <div className={styles.containerCenter}>
-        <Image src={logo} alt="Logo" />
+        <Image src={logo} width={100} height={80} alt="Logo" />
       
 
       <section className={styles.login}>
