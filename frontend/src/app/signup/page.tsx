@@ -3,6 +3,7 @@ import logo from "@/../public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { api } from "@/service/api";
+import { redirect } from "next/navigation";
 
 export default function Signup() {
   
@@ -24,6 +25,7 @@ export default function Signup() {
     } catch (error) {    
       console.log("Erro ao cadastrar o usuario", error);        
     }
+    redirect("/login");
   }
  
 
