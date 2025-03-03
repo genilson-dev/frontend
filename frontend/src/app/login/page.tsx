@@ -25,7 +25,7 @@ export default function Login() {
       // Salvando o token do usuario no cookie
       const expireTime = 60 * 60 * 24 * 90; // 90 dias
       const setCookies = await cookies();
-      setCookies.set("loginToken", response.data.token, {
+      setCookies.set("login", response.data.token, {
         maxAge: expireTime,
         path: "/",
         httpOnly: false,
