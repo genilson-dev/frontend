@@ -2,13 +2,16 @@ import logo from "./../../public/logo.svg";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.scss";
+import { api } from "@/service/api";
 
 export default function Home() {  
   async function handleLogin(formData: FormData){
     "use server"
+    // Instanciando e capturando os campos email e password
     const email = formData.get("email")
     const password = formData.get("password")
 
+    // Validando o tipo de email
     function validateEmail(email: string): boolean {
       const validEmail = /\S+@\S+\.\S+/;
       return validEmail.test(email);
@@ -17,6 +20,16 @@ export default function Home() {
 
     if(typeof(email) === typeof(validateEmail) && typeof(password) === "string" ){
       console.log("Funcionou");      
+    }
+    try {
+      const response = await api.post("/login", {
+        email, password
+      })
+      console.log(response.data);
+      
+    } catch (error) {
+      console.log(`O tipo de erro é: `, error);
+      
     }
     
 
