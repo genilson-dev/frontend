@@ -3,16 +3,29 @@ import Link from "next/link";
 import logo from "./../../../public/logo.svg";
 import Image from "next/image";
 import styles from './../page.module.scss'
+
 export default function Login() {
   async function handleLogin(formData: FormData) {
     "use server"
     const email = formData.get("email")
-    const password = formData.get("password")
+    const password = formData.get("password");
+    if (email === "" || password === "") return;
+
+    try {
+        // Acessando a api informada na rota
+        const response = await api.post("/login", {email, password});
+        console.log(response.data.auth.name); 
+        
+    } catch (error) {
+        console.log("O erro que deu foi: ", error)
+        return;
+        
+    }
 
     console.log("Esta chamando a função de login", email, password);
   }
   return (
-    <div>
+    <div className={styles.containerCenter}>
       <h1>Login</h1>
       <>
         {/* Quando clicar na imagem o usuario é redirecionado para a pagina home */}
