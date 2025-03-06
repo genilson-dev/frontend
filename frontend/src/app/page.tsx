@@ -1,47 +1,23 @@
-import styles from "./page.module.scss";
-import logo from "@/../public/logo.svg";
-import Image from "next/image";
+import logo from "./../../public/logo.svg";
+import { api } from "@/service/api";
 import Link from "next/link";
+import Image from "next/image";
+import styles from './page.module.scss'
 
 export default function Home() {
   return (
-    <>
-      <div className={styles.containerCenter}>
-        <Image src={logo} alt="Logo" />
-      
-
-      <section className={styles.login}>
-
-        {/* <form action="">
-          <input
-            type="email"
-            name="email"
-            required
-            placeholder="Digite o E-mail"
-            className={styles.input}
-          />
-
-          <input
-            type="password"
-            name="password"
-            required
-            placeholder="Digite sua senha"
-            className={styles.input}
-          />
-
-          <button type="submit" className={styles.button}>Logar</button>
-
-        </form> */}
-
-        <Link href="/signup" className={styles.text}>
-          Não possui uma conta? <strong>Cadastre-se!</strong>
-        </Link>
-        <Link href="/login" className={styles.text}>
-          Já tem uma conta? <strong>Faça login!</strong>
-        </Link>
-
-      </section>
-      </div>
-    </>
+    <div>
+      <h1>Pagina Home</h1>
+      {/* Este link direciona o usuario quando clicar na logo para a pagina home */}
+      <Link href="/">
+        <Image src={logo} alt="Logo favorito" />
+      </Link>
+      <Link href="/signup" className={styles.text}>
+        <h3>Não possui uma conta? Cadastre-se</h3>
+      </Link>
+      <Link href="/login" className={styles.text}>
+        <h3>Já conta? Faça login!</h3>
+      </Link>
+    </div>
   );
 }
