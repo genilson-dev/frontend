@@ -3,6 +3,7 @@ import Link from "next/link";
 import logo from "./../../../public/logo.svg";
 import Image from "next/image";
 import styles from './../page.module.scss'
+import { cookies } from "next/headers";
 
 export default function Login() {
   async function handleLogin(formData: FormData) {
@@ -14,7 +15,22 @@ export default function Login() {
     try {
         // Acessando a api informada na rota
         const response = await api.post("/login", {email, password});
-        console.log(response.data.auth.name); 
+        console.log(response.data.auth.name);
+
+        // Se o token não for encontrado deve parar a plicação
+        if (!response.data.token) return;
+        console.log(response.data)
+
+        // Validando o tempo para que o token expire
+        const tempoParaExpirarToken = 60 * 60 * 24 * 90 * 1000
+        const cookieStorage = await cookies();
+        cookieStorage.set("login", response.data.toke, {
+            maxAge: tempoParaExpirarToken,
+            path: "/",
+            httpOnly: false,
+            secure: process.env.NODE_ENV === "production"
+        })
+
         
     } catch (error) {
         console.log("O erro que deu foi: ", error)
