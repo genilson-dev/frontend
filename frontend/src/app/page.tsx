@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.scss";
 import { api } from "@/service/api";
+import { redirect } from "next/navigation";
 
 export default function Home() {  
   async function handleLogin(formData: FormData){
@@ -31,6 +32,9 @@ export default function Home() {
       console.log(`O tipo de erro é: `, error);
       
     }
+
+    // Redirecionando o usuario depois de logado para a pagina de signup
+    redirect("/signup")
     
 
   }
@@ -41,7 +45,9 @@ export default function Home() {
       <Link href="#">
         <Image src={logo} alt="Logo do projeto" />
       </Link>
+      
       <section className={styles.login}>
+          
         <form action={handleLogin}>
           <input
             type="email"
@@ -57,6 +63,9 @@ export default function Home() {
             placeholder="Digite sua senha"
             className={styles.input}
           />
+                
+
+      
           <button type="submit" className={styles.buttonDash}>Acess</button>
         </form>
         <Link href="/signup" className={styles.text}>
@@ -64,6 +73,7 @@ export default function Home() {
         </Link>
       </section>
     </>
+
     </div>
   );
 }
