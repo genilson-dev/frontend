@@ -10,7 +10,7 @@ const Header = () => {
     async function fetchUserName() {
       try {
         const response = await api.get('/me');
-        setUserName(response.data.name);
+        setUserName(response.data.auth.name);
       } catch (error) {
         console.log("Erro ao buscar o nome do usuário", error);
       }

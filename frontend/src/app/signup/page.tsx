@@ -6,7 +6,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Signup() {
-  async function handleLogin(formData: FormData) {
+  async function handleRegister(formData: FormData) {
     "use server";
     const name = formData.get("name");
     const email = formData.get("email");
@@ -20,7 +20,8 @@ export default async function Signup() {
 
     if (
       typeof email === typeof validateEmail &&
-      typeof password === "string"
+      typeof password === "string" &&
+      typeof name === "string"
     ) {
       console.log("Funcionou");
       return;
@@ -36,7 +37,7 @@ export default async function Signup() {
       console.log(error);
       console.log("Erro ao tentar cadastrar um novo usuario");
     }
-    redirect("/dashboard")
+    redirect("/")
   }
 
   return (
@@ -48,7 +49,7 @@ export default async function Signup() {
           </Link>
         </div>
         <section className={styles.login}>
-          <form action={handleLogin} className={styles.form}>
+          <form action={handleRegister} className={styles.form}>
             <input
               type="name"
               className={styles.input}

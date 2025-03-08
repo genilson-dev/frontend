@@ -34,7 +34,7 @@ export default function Home() {
     }
 
     // Redirecionando o usuario depois de logado para a pagina de signup
-    redirect("/signup")
+    redirect("/dashboard")
     
 
   }
