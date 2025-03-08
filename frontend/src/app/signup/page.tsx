@@ -3,6 +3,7 @@ import styles from "@/app/signup/page.module.scss";
 import logo from "./../../../public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function Signup() {
   async function handleLogin(formData: FormData) {
@@ -35,6 +36,7 @@ export default async function Signup() {
       console.log(error);
       console.log("Erro ao tentar cadastrar um novo usuario");
     }
+    redirect("/dashboard")
   }
 
   return (
