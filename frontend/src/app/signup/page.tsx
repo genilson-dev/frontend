@@ -31,7 +31,7 @@ export default async function Signup() {
       const response = await api.post("/create", {
        name, email, password
       })
-      console.log(response.data);
+      console.log(response.data.auth.name);
       // console.log(response.data);
     } catch (error) {
       console.log(error);

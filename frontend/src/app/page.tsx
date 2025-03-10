@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 export default function Home() {  
   async function handleLogin(formData: FormData){
     "use server"
-    // Instanciando e capturando os campos email e password
+    // Instanciando e capturando os campos email e password vindo do Form
     const email = formData.get("email")
     const password = formData.get("password")
 
@@ -23,14 +23,18 @@ export default function Home() {
       console.log("Funcionou");      
     }
     try {
+      // Buscando os dado no banco de dados atravez da api
       const response = await api.post("/login", {
         email, password
       })
-      console.log(response.data);
-      
+      if (response.data.token){
+        console.log("Token encontrado!");        
+        return;
+      }
+      console.log("O toke que foi capturado vindo da minha api/backend: ==> ", response.data.auth.token);
+      // Exibindo algum erro caso haja depois que a requisição for rejeitado
     } catch (error) {
-      console.log(`O tipo de erro é: `, error);
-      
+      console.log(`O tipo de erro é: `, error);      
     }
 
     // Redirecionando o usuario depois de logado para a pagina de signup
