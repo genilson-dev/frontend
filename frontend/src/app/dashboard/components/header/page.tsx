@@ -1,7 +1,29 @@
-import React from 'react'
+"use client";
+import { api } from '@/service/api';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 
-export default function Header() {
+const Header = () => {
+  const [userName, setUserName] = useState("Genilson");
+
+  useEffect(() => {
+    async function fetchUserName() {
+      try {
+        const response = await api.get('/me');
+        setUserName(response.data.auth.name);
+      } catch (error) {
+        console.log("Erro ao buscar o nome do usuário", error);
+      }
+    }
+
+    fetchUserName();
+  }, []);
+
   return (
-    <div>Header</div>
-  )
-}
+    <header>
+      <h1>Bem-vindo, {userName ? userName : 'Visitante'}!</h1>
+    </header>
+  );
+};
+
+export default Header;

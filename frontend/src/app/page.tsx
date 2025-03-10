@@ -3,11 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.scss";
 import { api } from "@/service/api";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default function Home() {  
   async function handleLogin(formData: FormData){
     "use server"
-    // Instanciando e capturando os campos email e password
+    // Instanciando e capturando os campos email e password vindo do Form
     const email = formData.get("email")
     const password = formData.get("password")
 
@@ -22,15 +24,36 @@ export default function Home() {
       console.log("Funcionou");      
     }
     try {
+      // Buscando os dado no banco de dados atravez da api
       const response = await api.post("/login", {
         email, password
       })
-      console.log(response.data);
-      
+      // Salvando o cookie no localstorage
+      const localstorage = await cookies();
+      const cookieTime = 60 * 60 * 24 * 30 * 1000;
+      localstorage.set("login", response.data.auth.token, {
+        maxAge: cookieTime,
+        path: "/",
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production"
+
+
+      })
+
+
+      // Verificando se o token consta na requisição, se não, para a aplicação
+      if (!response.data.auth.token){
+        console.log("Token encontrado!");        
+        return;
+      }
+      console.log("O toke que foi capturado vindo da minha api/backend: ==> ", response.data);
+      // Exibindo algum erro caso haja depois que a requisição for rejeitado
     } catch (error) {
-      console.log(`O tipo de erro é: `, error);
-      
+      console.log(`O tipo de erro é: `, error);      
     }
+
+    // Redirecionando o usuario depois de logado para a pagina de signup
+    redirect("/dashboard")
     
 
   }
@@ -41,7 +64,9 @@ export default function Home() {
       <Link href="#">
         <Image src={logo} alt="Logo do projeto" />
       </Link>
+      
       <section className={styles.login}>
+          
         <form action={handleLogin}>
           <input
             type="email"
@@ -57,6 +82,9 @@ export default function Home() {
             placeholder="Digite sua senha"
             className={styles.input}
           />
+                
+
+      
           <button type="submit" className={styles.buttonDash}>Acess</button>
         </form>
         <Link href="/signup" className={styles.text}>
@@ -64,6 +92,7 @@ export default function Home() {
         </Link>
       </section>
     </>
+
     </div>
   );
 }
