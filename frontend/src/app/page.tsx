@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./page.module.scss";
 import { api } from "@/service/api";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default function Home() {  
   async function handleLogin(formData: FormData){
@@ -27,11 +28,25 @@ export default function Home() {
       const response = await api.post("/login", {
         email, password
       })
-      if (response.data.token){
+      // Salvando o cookie no localstorage
+      const localstorage = await cookies();
+      const cookieTime = 60 * 60 * 24 * 30 * 1000;
+      localstorage.set("login", response.data.auth.token, {
+        maxAge: cookieTime,
+        path: "/",
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production"
+
+
+      })
+
+
+      // Verificando se o token consta na requisição, se não, para a aplicação
+      if (!response.data.auth.token){
         console.log("Token encontrado!");        
         return;
       }
-      console.log("O toke que foi capturado vindo da minha api/backend: ==> ", response.data.auth.token);
+      console.log("O toke que foi capturado vindo da minha api/backend: ==> ", response.data);
       // Exibindo algum erro caso haja depois que a requisição for rejeitado
     } catch (error) {
       console.log(`O tipo de erro é: `, error);      
