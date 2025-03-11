@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCookieServer } from './lib/cookieServer';
+import { api } from './service/api';
 
 export async function middleware(req: NextRequest){
   // console.log("Passou pelo middleware")
@@ -8,7 +9,11 @@ export async function middleware(req: NextRequest){
     return NextResponse.next()
   }
   const token = await getCookieServer();
-  console.log(token);
+  if(pathname.startsWith("/dashboard")){
+    if(!token){
+      return NextResponse.redirect(new URL("/", req.url))
+    }
+  }
   
 }
 

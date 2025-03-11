@@ -19,9 +19,9 @@ export default async function Signup() {
     }
 
     if (
-      typeof email === typeof validateEmail &&
-      typeof password === "string" &&
-      typeof name === "string"
+      typeof(email) === typeof(validateEmail) &&
+      typeof(password) === "string" &&
+      typeof(name) === "string"
     ) {
       console.log("Funcionou");
       return;
@@ -29,15 +29,18 @@ export default async function Signup() {
 
     try {
       const response = await api.post("/create", {
-       name, email, password
-      })
+        name,
+        email,
+        password,
+      });
+
       console.log(response.data.auth.name);
       // console.log(response.data);
     } catch (error) {
       console.log(error);
       console.log("Erro ao tentar cadastrar um novo usuario");
     }
-    redirect("/")
+    redirect("/");
   }
 
   return (
@@ -65,7 +68,7 @@ export default async function Signup() {
               placeholder="Digite seu E-mail"
             />
             <input
-              type="password" 
+              type="password"
               name="password"
               className={styles.input}
               placeholder="Crie sua senha"

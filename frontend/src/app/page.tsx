@@ -3,37 +3,41 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.scss";
 import { api } from "@/service/api";
+// import { redirect } from "next/navigation";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 export default function Home() {
   async function handleLogin(formData: FormData) {
     "use server";
+    
     // Instanciando e capturando os campos email e password vindo do Form
     const email = formData.get("email");
     const password = formData.get("password");
 
     // Validando o tipo de email
-    function validateEmail(email: string): boolean {
-      const validEmail = /\S+@\S+\.\S+/;
-      return validEmail.test(email);
-    }
-    // if (email === "" || password === ""){
-    //   return;
+    // function validateEmail(email: string): boolean {
+    //   const validEmail = /\S+@\S+\.\S+/;
+    //   return validEmail.test(email);
     // }
-
-    if (typeof email === typeof validateEmail && typeof password === "string") {
-      console.log("Funcionou");
+    if (email === "" || password === ""){
+      return;
     }
+
+    // if (typeof(email) === typeof(validateEmail) && typeof(password) === "string") {
+    //   console.log("Funcionou");
+    // }
     try {
       // Buscando os dado no banco de dados atravez da api
       const response = await api.post("/login", {
         email,
         password,
       });
-
+      
+      
       // Verificando se o token consta na requisição, se não, para a aplicação
-      if (!response.data.auth.token) {
+      const {toke} = response.data.auth
+      if (toke) {
         console.log("Não foi encontrado um token!");
         return;
       }
@@ -43,18 +47,18 @@ export default function Home() {
       const cookieTime = 60 * 60 * 24 * 30 * 1000;
       localstorage.set("login", response.data.auth.token, {
         maxAge: cookieTime,
-        httpOnly: false,
         path: "/",
+        httpOnly: false,
         secure: process.env.NODE_ENV === "production",
       });
-      redirect("/dashboard");
 
-      // console.log("O toke que foi capturado vindo da minha api/backend: ==> ", response.data.auth);
       // Exibindo algum erro caso haja depois que a requisição for rejeitado
     } catch (error) {
       console.log(`O tipo de erro é: `, error);
     }
     // Redirecionando o usuario depois de logado para a pagina de signup
+    
+    redirect("/dashboard");
   }
 
   return (
