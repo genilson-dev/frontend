@@ -16,17 +16,17 @@ export default function Home() {
     const password = formData.get("password");
 
     // Validando o tipo de email
-    // function validateEmail(email: string): boolean {
-    //   const validEmail = /\S+@\S+\.\S+/;
-    //   return validEmail.test(email);
-    // }
-    if (email === "" || password === ""){
-      return;
+    function validateEmail(email: string): boolean {
+      const validEmail = /\S+@\S+\.\S+/;
+      return validEmail.test(email);
     }
-
-    // if (typeof(email) === typeof(validateEmail) && typeof(password) === "string") {
-    //   console.log("Funcionou");
+    // if (email === "" || password === ""){
+    //   return;
     // }
+
+    if (typeof(email) === typeof(validateEmail) && typeof(password) === "string") {
+      console.log("Funcionou");
+    }
     try {
       // Buscando os dado no banco de dados atravez da api
       const response = await api.post("/login", {
