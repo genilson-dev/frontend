@@ -1,29 +1,22 @@
-"use client";
-import { api } from '@/service/api';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import Link from 'next/link'
+import styles from './styles.module.scss'
+import Image from 'next/image'
+import logo from './../../../../../public/logo.svg'
 
-const Header = () => {
-  const [userName, setUserName] = useState("Genilson");
-
-  useEffect(() => {
-    async function fetchUserName() {
-      try {
-        const response = await api.get('/me');
-        setUserName(response.data.auth.name);
-      } catch (error) {
-        console.log("Erro ao buscar o nome do usuário", error);
-      }
-    }
-
-    fetchUserName();
-  }, []);
-
+export default function Header() {
   return (
-    <header>
-      <h1>Bem-vindo, {userName ? userName : 'Visitante'}!</h1>
-    </header>
-  );
-};
+    <header className={styles.headerContainer}>
+      <div className={styles.headerContainer}>
+        <Link href="/dashboard">
+          <Image src={logo} alt='Logo da pizzaria' width={190} height={60} priority={true} quality={100}/>
+        </Link>
+        <nav>
+          <Link href="/dashboard/category" className={styles.link}>Categoria</Link>
+          <Link href="/dashboard/product" className={styles.link}>Produto</Link>
 
-export default Header;
+        </nav>
+      </div>
+      
+    </header>
+  )
+}

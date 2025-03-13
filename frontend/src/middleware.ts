@@ -27,7 +27,7 @@ async function validateToken(token: string){
   if(!token) {
     return false
   }
-
+  // Rota de acesso aos detalhes do usuario
   try {
     await api.get("/me", {
       headers:{
