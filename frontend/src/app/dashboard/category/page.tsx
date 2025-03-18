@@ -1,12 +1,19 @@
+
+import { Button } from "../components/button"
 import styles from "./page.module.scss"
 export default function Category() {
-  function handleSubmit(event: React.FormEvent) {
-    console.log("Clicou categoria")
+
+  async function handleRegisterCategory(){
+    "use server"
+    console.log("Cadastrando categoria")
   }
+
   return (
     <main className={styles.container}>
         <h1>Nova Categoria</h1>
-        <form  className={styles.form}>
+        <form
+          action={handleRegisterCategory}
+          className={styles.form}>
           <input 
           type="text"
           name="categoria"
@@ -15,9 +22,7 @@ export default function Category() {
           className={styles.input}
                     
           />
-          <button className={styles.button} >
-            cadastrar categoria
-          </button>
+          <Button name="Cadastrar" />
         </form>
     </main>
   )
