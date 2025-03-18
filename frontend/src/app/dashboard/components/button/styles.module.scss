@@ -1,0 +1,16 @@
+.button{
+    color: var(--white);
+    background-color: var(--LimeGreen);
+    border: 0;
+    border-radius: 5px;
+    font-size: 22px;
+    font-weight: bold;
+
+
+    &:hover{
+        transition: all 0.8s;
+        font-size: 25px;
+        background-color: var(--MidnightBlue);
+        color: red;
+    }
+}
