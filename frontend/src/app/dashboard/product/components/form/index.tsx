@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react'
 import styles from './../styles.module.scss'
 import {UploadCloud} from 'lucide-react'
 import Image from 'next/image'
-
+import { Button } from '@/app/dashboard/components/button'
 
 export default function Form() {
     const [image, setImage] = useState<File>();
@@ -47,6 +47,33 @@ export default function Form() {
                     />
                 )}
             </label>
+            <select name="category">
+                <option key={1} value={1}>Calabresa</option>
+                <option key={1} value={1}>Lasanha</option>
+                <option key={1} value={1}>Salpicada</option>
+                <option key={1} value={1}>Sardinha</option>
+            </select>
+            <input 
+                type="text" 
+                name='name' 
+                placeholder='Nome do produto' 
+                required  
+                className={styles.input}
+                />
+                <input 
+                type="text" 
+                name='price' 
+                placeholder='Preço do produto' 
+                required  
+                className={styles.input}
+                />
+                <textarea 
+                    name="description" 
+                    className={styles.input} 
+                    placeholder='Descriçãodo produto..'
+                    required
+                    ></textarea>
+                    <Button name='Novo produto' />
         </form>
     </main>
   )
