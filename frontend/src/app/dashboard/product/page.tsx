@@ -1,9 +1,4 @@
-import React from 'react'
-
+import Form from "./components/form";
 export default function Product() {
-  return (
-    <main>
-        <h1>Produtos</h1>
-    </main>
-  )
+  return <Form />;
 }
