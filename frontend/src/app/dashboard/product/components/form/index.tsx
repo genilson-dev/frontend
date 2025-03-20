@@ -25,21 +25,22 @@ export default function Form() {
     <main className={styles.container}>
         <h1>New Product</h1>       
 
-        <form action="" className={styles.form}>
-            <label htmlFor="" className={styles.labelImagem} >
+        <form className={styles.form}>
+            <label className={styles.labelImagem} >
                 <span>
-                    <UploadCloud size={24} color='#fff' />
-                    <input type="file" 
+                    <UploadCloud size={30} color='#fff' />
+                </span>
+                    <input 
+                    type="file" 
                     accept='image/png, image/jpeg' 
-                    required={true} 
+                    required
                     onChange={handleFile}
                     />
-                </span>
                 {previewImage && (
                     <Image 
-                    src={previewImage} 
                     alt="Preview" 
-                    className={styles.previewImage}
+                    src={previewImage} 
+                    className={styles.preview}
                     fill={true}
                     quality={100}
                     priority={true}
