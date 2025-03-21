@@ -5,7 +5,15 @@ import {UploadCloud} from 'lucide-react'
 import Image from 'next/image'
 import { Button } from '@/app/dashboard/components/button'
 
-export default function Form() {
+interface CategoryProps{
+    id: string;
+    name: string;
+}
+interface FormProps{
+    categories: CategoryProps[];
+}
+
+export default function Form({categories}: FormProps) {
     const [image, setImage] = useState<File>();
     const [previewImage, setPreviewImage] = useState<string>("");
 
@@ -48,10 +56,9 @@ export default function Form() {
                 )}
             </label>
             <select name="category">
-                <option key={1} value={1}>Calabresa</option>
-                <option key={1} value={1}>Lasanha</option>
-                <option key={1} value={1}>Salpicada</option>
-                <option key={1} value={1}>Sardinha</option>
+                {categories.map((category, index) => (
+                    <option key={category.id} value={index}> {category.name} </option>
+                ))}
             </select>
             <input 
                 type="text" 
